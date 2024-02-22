@@ -1,0 +1,40 @@
+# input
+
+## 模块介绍
+
+Linux 内核的 input 子系统是负责处理来自各种输入设备的数据的关键部分。它为键盘、鼠标、触摸屏和其他输入设备提供了一个统一的框架。
+
+## 相关资料和代码
+
+### 核心 Input 子系统代码
+- `/drivers/input/` 
+  包含了处理各种输入设备的核心驱动代码。
+
+### 事件设备代码（Event Device）
+- `/drivers/input/evdev/` 
+  负责管理通用的输入事件设备。
+
+### 特定于设备类型的驱动代码
+- `/drivers/input/keyboard/` 
+  键盘驱动。
+- `/drivers/input/mouse/` 
+  鼠标驱动。
+- `/drivers/input/touchscreen/` 
+  触摸屏驱动。
+- `/drivers/input/misc/` 
+  其他类型输入设备的驱动。
+
+### input子系统的头文件
+- `/include/linux/input.h` 
+  定义了输入子系统的主要结构和接口。
+- `/include/uapi/linux/input.h` 
+  用户空间应用程序接口（UAPI）头文件，为用户空间应用提供输入相关的定义。
+- `/include/uapi/linux/input-event-codes.h` 
+  定义了输入事件的代码，如按键代码、鼠标事件代码等。
+
+### 用户空间与内核空间接口
+- `/include/uapi/linux/input.h` 和 `/include/uapi/linux/input-event-codes.h` 
+  这些文件在内核的用户空间API（UAPI）目录下，提供了用户空间程序需要的接口和定义。
+
+在线阅读：[Linux source code (v6.6.8) - Bootlin](https://elixir.bootlin.com/linux/v6.6.8/source)
+
