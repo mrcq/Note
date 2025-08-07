@@ -36,8 +36,13 @@ mipi.dsi.datatype DCS
 
 2. MIPI速率计算公式为：(HAS+HBP+HFP+HACT)\*(VSA+VBP+VFP+VACT)\*FrameRate\*24/Lane，如是常规分辨率，可参考默认参数
 
+	> checklist中有推荐参数
+	>
 	> Long V 120Hz        ：RC1 10 20 20 4A 04 30 30 04
-	>  //Long V 120Hz      : VBP/VFP/HBP/HFP/VSA/HSA: 32 330 48 48 4 4
+	> //Long V 120Hz      : VBP/VFP/HBP/HFP/VSA/HSA: 32 330 48 48 4 4
+
+- `HSA` 是**水平方向**上用于同步一行开始的“对齐信号”的长度。（**`HSA` → `HBP` → `HACT` → `HFP`**）
+- `VSA` 是**垂直方向**上用于同步一帧开始的“对齐信号”的长度。（**`VSA` → `VBP` → `VACT` → `VFP`**）
 
 ## LCM Info
 
@@ -57,6 +62,8 @@ mipi.video 1576 720 120 32 300 48 48 4 4 //120HZ
 mipi.video.pixelformat 24bpp
 mipi.video.interval Blanking
 ```
+
+> 参考checklist
 
 ## Low Power mode
 
@@ -106,6 +113,8 @@ RF0 99 16 18
 RC0 40 93 FF FF FF 3F FF 00 FF 00 CC 58 01 23 45 67 89 AB FF FF
 ```
 
+> 参考checklist
+
 ### TCON
 
 ```shell
@@ -113,7 +122,16 @@ RC0 40 93 FF FF FF 3F FF 00 FF 00 CC 58 01 23 45 67 89 AB FF FF
 RC1 01 20 2C 04 30 30 04 28 06 22 40 35 05 07 11 84 4C 00 E3 00
 ```
 
+- Parameter 2：VBP 20(0x) == 32，同LCM Info设定
+- Parameter 3：1 + 2C = 12C(0x) = 300，同LCM Info设定
+- Parameter 4：VSA 04(0x) == 4，同LCM Info设定
+- Parameter 5：HBP 30(0x) == 48，同LCM Info设定
+- Parameter 6：HFP 30(0x) == 48，同LCM Info设定
+- Parameter 7：HSA 04(0x) == 4，同LCM Info设定
+- Parameter 9：NL 6 + 28 = 628(0x) == 1576，同LCM Info设定
+- Parameter 9：RC1-9th 正扫时R36=00,设定0x，确保SS_EOR/GS_EOR/BGR_EOR=0，REV_EOR?
 
+![](https://cdn.jsdelivr.net/gh/mrcq/Image@main/20250804214042316.png)
 
 ## 确定panel驱动电压
 
@@ -129,20 +147,32 @@ RC1 01 20 2C 04 30 30 04 28 06 22 40 35 05 07 11 84 4C 00 E3 00
 
 1. DISPOFF每个IC都要下吗？9922C没看到有下；DISPOFF的作用是什么？
 
+  没有实际作用，给客户看的
+
 2. MIPI nonburst-pulse/nonburst-event/nonburst/burst如何选择？Generic/DCS如何选择？
+
+  区别不大，burst速率快一点，Generic/DCS看客户需求，一般DCS
 
 3. LCM info VFP为什么是300而不是推荐的330？是有压缩用vesa-dsc无压缩用24bpp吗？什么时候用LP？
 
+	TP时间足够情况下，压缩VFP增加充电时间对显示比较好；对；默认Blanking
+
 4. lpmode 默认8Mbps吗？还是客户给值？
+
+	默认8M
 
 5. Hardware Reset每个IC都是固定的吗？从哪确认不同IC的指令？
 
+	看datasheet
+
 6. 9916 IC RF0 5A 59和RF1 A5 A6是做什么用的？
 
-	> RF0 99 16
-	>
-	> RF0 5A 59
-	> RF1 A5 A6
+  > RF0 99 16
+  >
+  > RF0 5A 59
+  > RF1 A5 A6
 
-7. 
+​	RF0 5A 59和RF1 A5 A6是对的，RF0 99 16是错的，password有时涉及RF1
+
+7. dsds
 

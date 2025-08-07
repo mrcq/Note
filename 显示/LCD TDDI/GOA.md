@@ -7,8 +7,6 @@
 
 - 
 
-- ![](https://cdn.jsdelivr.net/gh/mrcq/Image@main/20250709170042907.png)
-
 	
 
 
