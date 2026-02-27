@@ -43,4 +43,5 @@
 
 - [全面认识MOS管，一篇文章就够了-云社区-华为云](https://bbs.huaweicloud.com/blogs/375339)
 - [一文彻底弄清MOS管 （NMOS为例） - 知乎](https://zhuanlan.zhihu.com/p/368263926)
+- [MOS管符号箭头指向问题？ - 知乎](https://www.zhihu.com/question/27955221)
 
